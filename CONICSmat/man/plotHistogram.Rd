@@ -4,8 +4,8 @@
 \alias{plotHistogram}
 \title{Visualize a heatmap of posterior probabilities of cells for component 1 of Gaussian Mixture Models fit for each user-defined region}
 \usage{
-plotHistogram(pmat, expmat, clusters, zscoreThreshold = 4, patients = NULL,
-  celltypes = NULL)
+plotHistogram(pmat, expmat, clusters, zscoreThreshold = 4,
+  patients = NULL, celltypes = NULL)
 }
 \arguments{
 \item{pmat}{Matrix of posterior probabilites, as returned by plotAll().}

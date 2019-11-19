@@ -5,7 +5,8 @@
 \title{Generates a heatmap of gene expression across the genome for each cell}
 \usage{
 plotChromosomeHeatmap(mat, normal, plotcells, gene_pos, windowsize = 121,
-  chr = NULL, expThresh = 0.4, thresh = 1)
+  chr = FALSE, expThresh = 0.4, thresh = 1, colo = NULL,
+  colo2 = NULL, retMat = FALSE, plotdendrogram = FALSE)
 }
 \arguments{
 \item{mat}{A genes X samples expression matrix of log2(CPM/10+1) scaled (single cell) RNA-seq counts.}
@@ -18,11 +19,17 @@ plotChromosomeHeatmap(mat, normal, plotcells, gene_pos, windowsize = 121,
 
 \item{windowsize}{Integer size of the window smoothing the gene expression data}
 
-\item{chr}{Optional: Vector of chromosomes (integer) to order the heatmap}
+\item{chr}{Optional: Boolenan: Hierarchically cluster rows (cells) to identify clones. default: FALSE}
 
 \item{expThresh}{Optional: Double threshold for the average expression of a gene across all cells to be considered in the calculation.}
 
 \item{thresh}{Optional: Double visualtization threshold: Rations above/below this threshold (x>t | x<(-t)) will be set to t | -t}
+
+\item{colo}{Optional: Color for each cell, e.g. for each patient. Will be displayed next to the heatmap}
+
+\item{colo2}{Optional: Second color for each cell, e.g. for each region. Will be displayed next to the heatmap}
+
+\item{retMat}{Optional: return normalized matrix for custom plotting}
 }
 \description{
 This function generates a heatmap of gene expression across the genome for each cell

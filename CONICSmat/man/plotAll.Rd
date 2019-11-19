@@ -5,7 +5,8 @@
 \title{Estimate and visualize a two-component Gaussian Mixture Model based on a log2(CPM/10+1) expression matrix}
 \usage{
 plotAll(mat, normFactor, regions, gene_pos, fname, normal = NULL,
-  tumor = NULL, postProb = 0.95, repetitions = 5)
+  tumor = NULL, postProb = 0.8, repetitions = 4, vis = T,
+  showProgress = TRUE, returnInternalData = FALSE)
 }
 \arguments{
 \item{mat}{A genes X samples expression matrix of log2(CPM/10+1) scaled (single cell) RNA-seq counts.}
@@ -21,6 +22,10 @@ plotAll(mat, normFactor, regions, gene_pos, fname, normal = NULL,
 \item{normal}{Optional: A vector of indices for normal cells}
 
 \item{tumor}{Optional: A vector of indices for tumor cells}
+
+\item{vis}{A logici indicating whether to produce visuals or not}
+
+\item{returnInternalData}{A logic indicating whether to return more of the data internally generated instead of the default (posterior data). If true a list with a 1) The z-score matrix (CNV estimate), 2) The result of biomodual test (extention of orignal table) and 3) the classification of each sample into group1 or group2 (which are compared in the in the result of biomodual test).}
 }
 \description{
 This function estimates a two component Gaussian Mixture Model on log2(CPM/10+1) expression matrix and visualizes the results.

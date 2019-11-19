@@ -1,3 +1,54 @@
+# __NOTE__
+
+This is a modified fork of the original CONICS repository! The original repository can be found [here](https://github.com/diazlab/CONICS). Unless you have a specific reason I would recomend you use the original repository! Whereas the original repositiory primarly focuses on saving a visual repport of the analysis this repository have been modified to allow for continued analysis of the CNV estimates.
+
+# __Changes__
+
+Compared to the original repository this fork have been modified in 4 ways. The modification only conserns the included R package "CONICSmat". Specifically the plotAll() and the underlying plotChrEnichment() functions was modified to enable the return of some of the interanally generated data. 
+
+- The _returnInternalData_ option of the _plotChrEnichment()_ function will now cause the a list containing 3 elements: 
+    + A data.frame with statistical comparison of the two estimated distribution of expression scores expression (as well as the BIC summary).
+    + A matrix with the mean scaled expression for each region (row) of each sample (column)
+    + A matrix containing the bimodual classification for each region (row) of each sample (column). 1 means largest group, 0 means the smallest group. This can be compared to summary also returned to see info about each distribution.
+- Allow user to turn off visual output
+- Modified to supresse printed output
+- The _extractSlidingRegionsFromGenes()_ function which extract the coordinats of a sliding across expressed genes to eanble a more more finetuned - gene-defined CNV analysis. The idea of using regions of expressed genes is from _Patel et al., 2014_ and _Darmanis et al 2017_.
+
+
+# __Modified workflow__
+    
+    ###
+    expMat <- ... # you will have to create that one yourself.
+    
+    ###
+    gene_pos <- getGenePositions(rownames(expMat))
+                
+    ### Filter
+    expMatFilt <- filterMatrix(expMat, gene_pos[,"hgnc_symbol"])
+    
+    ### Prepare
+    normFactor <- calcNormFactors(expMatFilt)
+    
+    ### Extract regions to analyze
+    myGeneRegions <- extractSlidingRegionsFromGenes(
+        mat = expMatFilt,
+        gene_pos = gene_pos,
+        fracChrGenesInWindow = 0.1,
+        minWindowSize = 100,
+        windowSlideFraction = 0.25
+    )
+    
+    ### Do CONICS analysis
+    conicsAnalysisData <- plotAll(
+        mat = darmanisLog2BatchCorFilt,
+        normFactor = normFactor,
+        regions = myGeneRegions,
+        gene_pos = gene_pos,
+        vis = FALSE,                # turn off creation of original visualizations
+        returnInternalData = TRUE   # The main change done
+    )
+
+
 # __CONICS__
 *CONICS*: *CO*py-*N*umber analysis *I*n single-*C*ell RNA-*S*equencing
 
